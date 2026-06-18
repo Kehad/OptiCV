@@ -79,24 +79,24 @@ ${extractedText.substring(0, 4000)}
     const parsedData = JSON.parse(completion.choices[0].message.content || "{}");
 
     // Create the resume in the database
-    // const { data: resume, error: resumeError } = await supabase
-    //   .from('Resume')
-    //   .insert({
-    //     userId: user.id,
-    //     title: `${parsedData.personalInfo?.name || "My"} - Base Resume`,
-    //     content: parsedData,
-    //     isOriginal: true,
-    //   })
-    //   .select()
-    //   .single();
+    const { data: resume, error: resumeError } = await supabase
+      .from('Resume')
+      .insert({
+        userId: user.id,
+        title: `${parsedData.personalInfo?.name || "My"} - Base Resume`,
+        content: parsedData,
+        isOriginal: true,
+      })
+      .select()
+      .single();
 
-    // if (resumeError) {
-    //   throw resumeError;
-    // }
+    if (resumeError) {
+      throw resumeError;
+    }
 
 
-    // return NextResponse.json({ resume, parsedData }, { status: 201 });
-    return NextResponse.json({ parsedData }, { status: 201 });
+    return NextResponse.json({ resume, parsedData }, { status: 201 });
+    // return NextResponse.json({ parsedData }, { status: 201 });
   } catch (error) {
     console.error("Resume upload error:", error);
     return NextResponse.json(

@@ -54,6 +54,7 @@ export function ApplyForm({
           recruiterEmail,
           subject,
           notes,
+          userEmail,
         }),
       });
 

@@ -113,6 +113,24 @@ export default async function JobDetailsPage({
                       <span>{qual}</span>
                     </li>
                   ))}
+                  {(!extractedData?.qualifications || extractedData.qualifications.length === 0) && (
+                    <li className="text-muted-foreground text-sm">No specific qualifications listed.</li>
+                  )}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">ATS Requirements</h3>
+                <ul className="space-y-2">
+                  {extractedData?.atsRequirements?.map((req: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <Target className="w-4 h-4 text-purple-500 flex-shrink-0 mt-0.5" />
+                      <span>{req}</span>
+                    </li>
+                  ))}
+                  {(!extractedData?.atsRequirements || extractedData.atsRequirements.length === 0) && (
+                    <li className="text-muted-foreground text-sm">No strict ATS requirements identified.</li>
+                  )}
                 </ul>
               </div>
             </div>

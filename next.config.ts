@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "8mb"
     }
   },
+  serverExternalPackages: ["playwright"],
   typedRoutes: true
 };
 

@@ -37,96 +37,100 @@ export function JobAnalyzerForm() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex bg-muted p-1 rounded-xl w-full max-w-md mx-auto mb-8">
+    <div className="space-y-6 font-sans">
+      <div className="flex bg-muted/60 p-1.5 rounded-2xl w-full max-w-md mx-auto mb-8 border border-border/40 backdrop-blur-sm">
         {[
           { id: "text", label: "Paste Text", icon: FileText },
-          { id: "url", label: "URL", icon: LinkIcon },
+          { id: "url", label: "URL Link", icon: LinkIcon },
           { id: "file", label: "Upload File", icon: UploadCloud },
         ].map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id as any)}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 ${
               activeTab === tab.id
-                ? "bg-background text-foreground shadow-sm"
+                ? "bg-card text-foreground shadow-md border border-border/10"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <tab.icon className="w-4 h-4" />
+            <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? 'text-primary' : ''}`} />
             {tab.label}
           </button>
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-2">
-            <label htmlFor="title" className="text-sm font-medium">Job Title</label>
+            <label htmlFor="title" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Job Title</label>
             <input
               type="text"
               id="title"
               name="title"
               required
-              className="w-full p-3 bg-background border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+              className="w-full p-3 bg-card border border-border/80 rounded-xl text-sm placeholder-slate-400 focus:bg-background outline-none transition-all duration-200"
               placeholder="e.g. Senior Frontend Engineer"
             />
           </div>
           <div className="space-y-2">
-            <label htmlFor="company" className="text-sm font-medium">Company</label>
+            <label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Company</label>
             <input
               type="text"
               id="company"
               name="company"
               required
-              className="w-full p-3 bg-background border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+              className="w-full p-3 bg-card border border-border/80 rounded-xl text-sm placeholder-slate-400 focus:bg-background outline-none transition-all duration-200"
               placeholder="e.g. Acme Corp"
             />
           </div>
         </div>
 
         {activeTab === "text" && (
-          <div className="space-y-2">
-            <label htmlFor="description" className="text-sm font-medium">Job Description</label>
+          <div className="space-y-2 animate-fade-in">
+            <label htmlFor="description" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Job Description</label>
             <textarea
               id="description"
               name="description"
               required
               rows={8}
-              className="w-full p-3 bg-background border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-y"
+              className="w-full p-3.5 bg-card border border-border/80 rounded-xl text-sm placeholder-slate-400 focus:bg-background outline-none transition-all duration-200 resize-y custom-scrollbar font-light leading-relaxed"
               placeholder="Paste the full job description here..."
             />
           </div>
         )}
 
         {activeTab === "url" && (
-          <div className="space-y-2">
-            <label htmlFor="url" className="text-sm font-medium">Job Posting URL</label>
+          <div className="space-y-2 animate-fade-in">
+            <label htmlFor="url" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Job Posting URL</label>
             <input
               type="url"
               id="url"
               name="url"
               required
-              className="w-full p-3 bg-background border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-              placeholder="https://..."
+              className="w-full p-3 bg-card border border-border/80 rounded-xl text-sm placeholder-slate-400 focus:bg-background outline-none transition-all duration-200"
+              placeholder="https://company.com/careers/senior-frontend-developer"
             />
           </div>
         )}
 
         {activeTab === "file" && (
-          <div className="space-y-2">
-            <label htmlFor="file" className="text-sm font-medium">Upload Job Description</label>
-            <div className="w-full p-8 bg-background border-2 border-dashed border-border rounded-xl text-center hover:border-primary/50 transition-colors">
+          <div className="space-y-2 animate-fade-in">
+            <label htmlFor="file" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Upload Job Description</label>
+            <div className="w-full p-10 bg-card border-2 border-dashed border-border hover:border-primary/40 rounded-2xl text-center transition-all duration-300 relative cursor-pointer group shadow-sm">
               <input
                 type="file"
                 id="file"
                 name="file"
                 required
                 accept=".pdf,.docx,.txt"
-                className="mx-auto"
+                className="absolute inset-0 opacity-0 cursor-pointer"
               />
-              <p className="text-xs text-muted-foreground mt-4">Supported formats: PDF, DOCX, TXT</p>
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <UploadCloud className="w-6 h-6 text-primary" />
+              </div>
+              <h4 className="font-bold text-sm text-foreground">Select Job Description File</h4>
+              <p className="text-xs text-muted-foreground mt-2 font-light">Supported formats: PDF, DOCX, TXT up to 5MB</p>
             </div>
           </div>
         )}
@@ -134,12 +138,12 @@ export function JobAnalyzerForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-glow hover:shadow-glow-lg disabled:opacity-70 flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-gradient-to-r from-primary to-indigo-600 text-white font-semibold rounded-xl text-base hover:from-primary/95 hover:to-indigo-500 transition-all duration-300 shadow-glow hover:shadow-glow-lg disabled:opacity-75 disabled:cursor-not-allowed hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
         >
           {isLoading ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              Analyzing...
+              Analyzing Job Posting...
             </>
           ) : (
             "Analyze Job Requirements"

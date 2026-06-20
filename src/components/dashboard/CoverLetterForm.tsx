@@ -81,33 +81,33 @@ export function CoverLetterForm({
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-sans">
       {generatedLetter ? (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold">Your Generated Cover Letter</h2>
+        <div className="space-y-6 animate-fade-in-up">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 className="text-xl font-bold font-outfit text-foreground">Your Generated Cover Letter</h2>
             <div className="flex gap-2">
               <button
                 onClick={handleCopy}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-lg font-medium transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-card hover:bg-muted text-foreground border border-border rounded-xl text-xs font-semibold transition-all duration-200 hover-lift"
               >
-                {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                 {copied ? "Copied" : "Copy text"}
               </button>
               <button
                 onClick={() => router.push(`/dashboard/apply?jobId=${jobId}`)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium transition-colors shadow-glow"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2 bg-primary hover:bg-primary/95 text-white rounded-xl text-xs font-semibold transition-all duration-300 shadow-glow hover:shadow-glow-lg hover-lift"
               >
                 Proceed to Apply
               </button>
             </div>
           </div>
-          <div className="glass-panel p-6 rounded-2xl bg-muted/30 whitespace-pre-wrap font-sans text-sm leading-relaxed max-h-[500px] overflow-y-auto custom-scrollbar">
+          <div className="glass-panel p-6 rounded-3xl bg-muted/40 text-slate-600 dark:text-slate-300 whitespace-pre-wrap font-sans text-sm leading-relaxed max-h-[500px] overflow-y-auto custom-scrollbar border border-border/60 shadow-sm leading-[1.6]">
             {generatedLetter}
           </div>
           <button
             onClick={() => setGeneratedLetter(null)}
-            className="text-sm text-primary hover:underline"
+            className="text-xs font-bold text-primary hover:underline"
           >
             Generate another version
           </button>
@@ -115,15 +115,15 @@ export function CoverLetterForm({
       ) : (
         <>
           <div className="space-y-6">
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg flex items-center gap-2">
+            <div className="space-y-3">
+              <h3 className="font-bold text-base flex items-center gap-2 text-foreground font-outfit">
                 <FileText className="w-5 h-5 text-primary" />
-                Select Resume to use
+                Select Resume Source
               </h3>
               <select
                 value={selectedResume}
                 onChange={(e) => setSelectedResume(e.target.value)}
-                className="w-full p-3 bg-background border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                className="w-full p-3 bg-card border border-border rounded-xl text-sm outline-none focus:bg-background transition-all duration-200"
               >
                 {resumes.map((resume) => (
                   <option key={resume.id} value={resume.id}>
@@ -133,20 +133,20 @@ export function CoverLetterForm({
               </select>
             </div>
 
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg flex items-center gap-2">
-                <Settings2 className="w-5 h-5 text-purple-500" />
-                Select Tone
+            <div className="space-y-3">
+              <h3 className="font-bold text-base flex items-center gap-2 text-foreground font-outfit">
+                <Settings2 className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
+                Select Writing Tone
               </h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2.5">
                 {TONES.map((tone) => (
                   <button
                     key={tone}
                     onClick={() => setSelectedTone(tone)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
                       selectedTone === tone
-                        ? "bg-purple-500/20 text-purple-500 border border-purple-500/50"
-                        : "bg-muted text-muted-foreground border border-transparent hover:border-border"
+                        ? "bg-primary/10 text-primary border border-primary/20 shadow-sm"
+                        : "bg-muted hover:bg-muted/80 text-muted-foreground border border-transparent hover:border-border/30"
                     }`}
                   >
                     {tone}
@@ -159,12 +159,12 @@ export function CoverLetterForm({
           <button
             onClick={handleGenerate}
             disabled={isGenerating || !selectedResume}
-            className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-glow hover:shadow-glow-lg disabled:opacity-70 flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-gradient-to-r from-primary to-indigo-600 text-white font-semibold rounded-xl text-base hover:from-primary/95 hover:to-indigo-500 transition-all duration-300 shadow-glow hover:shadow-glow-lg disabled:opacity-75 disabled:cursor-not-allowed hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-6"
           >
             {isGenerating ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Writing Cover Letter...
+                Generating Cover Letter...
               </>
             ) : (
               "Generate with AI"

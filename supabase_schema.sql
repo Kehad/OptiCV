@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public."Application" (
     "coverLetterId" UUID REFERENCES public."CoverLetter"(id) ON DELETE SET NULL,
     status TEXT NOT NULL,
     "submissionMethod" TEXT,
+    "automationPreview" JSONB,
     "appliedAt" TIMESTAMP WITH TIME ZONE,
     "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW()

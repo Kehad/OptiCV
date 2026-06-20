@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        outfit: ["Outfit", "sans-serif"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -41,15 +45,15 @@ const config: Config = {
         "destructive-foreground": "hsl(var(--destructive-foreground))",
       },
       boxShadow: {
-        panel: "0 12px 32px rgba(16, 24, 40, 0.08)",
-        glow: "0 0 20px rgba(45, 212, 191, 0.4)",
-        "glow-lg": "0 0 40px rgba(45, 212, 191, 0.6)",
+        panel: "0 12px 32px rgba(16, 24, 40, 0.04)",
+        glow: "0 0 20px rgba(99, 102, 241, 0.15)",
+        "glow-lg": "0 0 40px rgba(99, 102, 241, 0.3)",
       },
       animation: {
-        "fade-in-up": "fadeInUp 0.5s ease-out",
-        "fade-in": "fadeIn 0.5s ease-out",
+        "fade-in-up": "fadeInUp 0.5s ease-out forwards",
+        "fade-in": "fadeIn 0.5s ease-out forwards",
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        blob: "blob 7s infinite",
+        blob: "blob 10s infinite",
       },
       keyframes: {
         fadeInUp: {

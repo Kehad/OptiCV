@@ -118,28 +118,28 @@ export function ResumeUploadButton() {
           tabIndex={0}
           role="button"
           aria-label="Upload Resume"
-          className={`glass-panel p-8 rounded-2xl flex flex-col items-center justify-center text-center border-dashed border-2 transition-all cursor-pointer group h-full min-h-[200px] outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-            isDragging ? 'border-primary bg-primary/5' : 'border-primary/30 hover:border-primary/60'
-          } ${error ? 'border-destructive/50' : ''}`}
+          className={`glass-panel p-8 rounded-3xl flex flex-col items-center justify-center text-center border-dashed border-2 transition-all duration-300 cursor-pointer group h-full min-h-[220px] outline-none ${
+            isDragging ? 'border-primary bg-primary/5 shadow-glow' : 'border-primary/20 hover:border-primary/40'
+          } ${error ? 'border-destructive/40 bg-destructive/5' : ''}`}
         >
           {isUploading ? (
-            <>
-              <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
-              <h3 className="font-semibold text-lg">Parsing Resume...</h3>
-              <p className="text-sm text-muted-foreground mt-2">Extracting skills and experience with AI</p>
-            </>
+            <div className="space-y-3.5 animate-pulse">
+              <Loader2 className="w-12 h-12 text-primary animate-spin mb-2 mx-auto" />
+              <h3 className="font-bold text-lg font-outfit text-foreground">Parsing Resume...</h3>
+              <p className="text-xs text-muted-foreground font-light">Extracting sections and skills using AI models</p>
+            </div>
           ) : (
             <>
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-transform ${isDragging ? 'bg-primary/20 scale-110' : 'bg-primary/10 group-hover:scale-110'}`}>
-                <UploadCloud className={`w-8 h-8 ${isDragging ? 'text-primary' : 'text-primary'}`} />
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 ${isDragging ? 'bg-primary/20 scale-110' : 'bg-primary/10 group-hover:scale-110 shadow-sm'}`}>
+                <UploadCloud className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold text-lg">Upload New Resume</h3>
-              <p className="text-sm text-muted-foreground mt-2 mb-2">Drag & drop or click to browse</p>
-              <p className="text-xs text-muted-foreground">PDF, DOCX, or TXT up to 5MB</p>
+              <h3 className="font-bold text-base font-outfit text-foreground">Upload New Resume</h3>
+              <p className="text-xs text-slate-400 mt-1 font-light">Drag & drop or click to browse files</p>
+              <p className="text-[10px] text-muted-foreground mt-1.5 font-light">PDF, DOCX, or TXT formats (max 5MB)</p>
               
               {error && (
-                <div className="mt-4 flex items-center text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-lg">
-                  <AlertCircle className="w-4 h-4 mr-2" />
+                <div className="mt-4 flex items-center text-xs text-destructive bg-destructive/10 px-3.5 py-2.5 rounded-xl border border-destructive/20 font-semibold">
+                  <AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
                   {error}
                 </div>
               )}

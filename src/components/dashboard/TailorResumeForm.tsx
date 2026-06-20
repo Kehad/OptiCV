@@ -66,26 +66,26 @@ export function TailorResumeForm({
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-sans">
       {tailoredResumeId ? (
-        <div className="text-center py-12 space-y-4">
-          <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 className="w-10 h-10 text-success" />
+        <div className="text-center py-12 space-y-5 animate-fade-in-up">
+          <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-500/20 shadow-glow">
+            <CheckCircle2 className="w-10 h-10 text-emerald-500" />
           </div>
-          <h2 className="text-2xl font-bold">Resume Tailored Successfully!</h2>
-          <p className="text-muted-foreground max-w-md mx-auto">
-            Your resume has been optimized with keywords and relevant experience matching the job description.
+          <h2 className="text-2xl font-extrabold font-outfit text-foreground">Resume Tailored Successfully!</h2>
+          <p className="text-muted-foreground text-sm font-light max-w-md mx-auto leading-relaxed">
+            Your resume has been optimized with target keywords and aligned experience to match the job requirements.
           </p>
-          <div className="flex justify-center gap-4 mt-8">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
             <button 
-              onClick={() => router.push(`/dashboard/resumes`)} // TODO: link to view resume
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:bg-primary/90 transition-all shadow-glow"
+              onClick={() => router.push(`/dashboard/resumes`)}
+              className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-xl text-sm font-semibold hover:from-primary/95 hover:to-indigo-500 transition-all duration-300 shadow-glow hover:shadow-glow-lg hover-lift"
             >
               View Tailored Resume
             </button>
             <button 
               onClick={() => router.push(`/dashboard/cover-letter?jobId=${jobId}`)}
-              className="px-6 py-3 bg-white text-foreground border border-border hover:bg-muted rounded-xl font-bold transition-colors"
+              className="w-full sm:w-auto px-6 py-3 bg-card text-foreground border border-border hover:bg-muted rounded-xl text-sm font-semibold transition-all duration-200 hover-lift"
             >
               Generate Cover Letter
             </button>
@@ -94,22 +94,25 @@ export function TailorResumeForm({
       ) : (
         <>
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Select Base Resume</h3>
+            <h3 className="font-bold text-lg font-outfit text-foreground">Select Base Resume</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {baseResumes.map((resume) => (
                 <div
                   key={resume.id}
                   onClick={() => setSelectedResume(resume.id)}
-                  className={`p-4 border rounded-xl cursor-pointer transition-all flex items-center gap-3 ${
+                  className={`p-5 border rounded-2xl cursor-pointer transition-all duration-300 flex items-center gap-4 relative overflow-hidden ${
                     selectedResume === resume.id
-                      ? "border-primary bg-primary/5 ring-1 ring-primary"
-                      : "border-border hover:border-primary/50 hover:bg-muted"
+                      ? "border-primary bg-primary/5 shadow-glow"
+                      : "border-border hover:border-primary/30 bg-card hover:bg-muted/30"
                   }`}
                 >
-                  <div className={`p-2 rounded-lg ${selectedResume === resume.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+                  <div className={`p-2.5 rounded-xl transition-colors duration-300 ${selectedResume === resume.id ? "bg-primary text-white" : "bg-muted text-muted-foreground"}`}>
                     <FileText className="w-5 h-5" />
                   </div>
-                  <span className="font-medium">{resume.title}</span>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-sm text-foreground">{resume.title}</span>
+                    <span className="text-[10px] text-muted-foreground mt-0.5 font-light">Original Base Version</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -118,12 +121,12 @@ export function TailorResumeForm({
           <button
             onClick={handleTailor}
             disabled={isTailoring || !selectedResume}
-            className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-glow hover:shadow-glow-lg disabled:opacity-70 flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-gradient-to-r from-primary to-indigo-600 text-white font-semibold rounded-xl text-base hover:from-primary/95 hover:to-indigo-500 transition-all duration-300 shadow-glow hover:shadow-glow-lg disabled:opacity-75 disabled:cursor-not-allowed hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-6"
           >
             {isTailoring ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Tailoring Resume...
+                Tailoring Resume with AI...
               </>
             ) : (
               "Tailor with AI"

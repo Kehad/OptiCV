@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { Sparkles, ArrowRight, Loader2, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
@@ -34,12 +34,10 @@ export default function RegisterPage() {
       if (signUpError) {
         setError(signUpError.message);
       } else {
-        // Redirect to login or check if user was auto-confirmed and logged in
         if (data.session) {
           router.push("/dashboard");
         } else {
           setError("Please check your email to confirm registration.");
-          // Give a small delay or let them go to login
           setTimeout(() => {
             router.push("/login");
           }, 3000);
@@ -52,86 +50,102 @@ export default function RegisterPage() {
     }
   };
 
-
   return (
-    <div className="min-h-screen bg-background flex flex-row-reverse">
-      {/* Right side - Branding */}
-      <div className="hidden lg:flex flex-1 flex-col justify-between p-12 bg-primary/5 relative overflow-hidden">
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-300/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-        
-        <div className="relative z-10 flex justify-end">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-2xl tracking-tight">OptiCV</span>
-            <img src="/logo.png" alt="OptiCV Logo" className="w-10 h-10 rounded-xl object-cover" />
-          </div>
+    <div className="min-h-screen bg-[#070913] text-slate-100 flex flex-row-reverse relative overflow-hidden font-sans">
+      {/* Background blobs */}
+      <div className="absolute top-[-20%] right-[-20%] w-[60%] h-[60%] bg-primary/10 rounded-full mix-blend-screen filter blur-[150px] animate-blob"></div>
+      <div className="absolute bottom-[-20%] left-[-20%] w-[60%] h-[60%] bg-accent/10 rounded-full mix-blend-screen filter blur-[150px] animate-blob animation-delay-2000"></div>
+
+      {/* Right side - Branding Graphics */}
+      <div className="hidden lg:flex flex-1 flex-col justify-between p-16 bg-slate-950/40 border-l border-white/5 relative z-10 backdrop-blur-xl">
+        <div className="flex items-center gap-3 justify-end">
+          <Link href="/" className="flex items-center gap-3 group">
+            <span className="font-outfit font-outfit font-extrabold text-xl tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              OptiCV
+            </span>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center shadow-glow">
+              <Sparkles className="w-5 h-5 text-white animate-pulse" />
+            </div>
+          </Link>
         </div>
 
-        <div className="relative z-10 text-right">
-          <h1 className="text-5xl font-extrabold tracking-tight mb-6">
+        <div className="space-y-6 text-right">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent font-semibold text-xs border border-accent/20 backdrop-blur-sm ml-auto">
+            <Sparkles className="w-3.5 h-3.5 text-primary animate-spin" style={{ animationDuration: '4s' }} />
+            <span>Interactive Application Suite</span>
+          </div>
+          <h1 className="text-5xl font-extrabold tracking-tight font-outfit text-white leading-tight">
             Start automating <br /> your job search
           </h1>
-          <p className="text-xl text-muted-foreground max-w-md ml-auto">
-            Join thousands of professionals landing interviews faster with AI-tailored applications.
+          <p className="text-slate-400 text-lg leading-relaxed max-w-md ml-auto font-sans font-light">
+            Join thousands of modern job seekers landing interviews faster with customized resumes and letters.
           </p>
         </div>
         
-        <div className="relative z-10 text-sm text-muted-foreground font-medium text-right">
+        <div className="text-xs text-slate-500 font-medium text-right">
           © {new Date().getFullYear()} OptiCV. All rights reserved.
         </div>
       </div>
 
       {/* Left side - Register Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8 animate-fade-in-up">
-          <div className="text-center lg:text-left">
-            <h2 className="text-3xl font-bold tracking-tight mb-2">Create an account</h2>
-            <p className="text-muted-foreground">Get started with OptiCV today</p>
+      <div className="flex-1 flex flex-col justify-center p-8 sm:p-12 md:p-16 relative z-10">
+        <Link href="/" className="lg:hidden absolute top-8 left-8 flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors duration-200">
+          <ArrowLeft className="w-4 h-4" /> Back to Home
+        </Link>
+
+        <div className="w-full max-w-md mx-auto space-y-8 glass-panel border border-white/5 rounded-3xl p-8 shadow-2xl bg-slate-900/40 backdrop-blur-xl animate-fade-in-up">
+          <div className="text-center sm:text-left">
+            <h2 className="text-3xl font-bold tracking-tight font-outfit text-white mb-2">Create an account</h2>
+            <p className="text-slate-400 text-sm font-sans font-light">Get started with OptiCV today</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="p-4 rounded-xl bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20">
+              <div className="p-4 rounded-xl bg-destructive/10 text-destructive text-sm font-semibold border border-destructive/20 animate-fade-in">
                 {error}
               </div>
             )}
+            
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="name">
+                <label className="text-sm font-medium text-slate-300" htmlFor="name">
                   Full Name
                 </label>
                 <input
                   id="name"
                   type="text"
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-card/50 focus:bg-card focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-slate-950/40 text-slate-100 placeholder-slate-500 focus:bg-slate-950/80 outline-none transition-all duration-200 text-sm font-sans"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
               </div>
+
               <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="email">
+                <label className="text-sm font-medium text-slate-300" htmlFor="email">
                   Email
                 </label>
                 <input
                   id="email"
                   type="email"
                   placeholder="name@example.com"
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-card/50 focus:bg-card focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-slate-950/40 text-slate-100 placeholder-slate-500 focus:bg-slate-950/80 outline-none transition-all duration-200 text-sm font-sans"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
+              
               <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="password">
+                <label className="text-sm font-medium text-slate-300" htmlFor="password">
                   Password
                 </label>
                 <input
                   id="password"
                   type="password"
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-card/50 focus:bg-card focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-slate-950/40 text-slate-100 placeholder-slate-500 focus:bg-slate-950/80 outline-none transition-all duration-200 text-sm"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -143,7 +157,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-glow hover:shadow-glow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-primary to-indigo-600 text-white font-semibold rounded-xl hover:from-primary/95 hover:to-indigo-500 transition-all duration-300 shadow-glow hover:shadow-glow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5"
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -155,9 +169,9 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground font-medium">
+          <p className="text-center text-sm text-slate-400 font-medium pt-2">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline">
+            <Link href="/login" className="text-primary hover:text-primary-foreground font-semibold hover:underline transition-colors duration-200">
               Sign in
             </Link>
           </p>

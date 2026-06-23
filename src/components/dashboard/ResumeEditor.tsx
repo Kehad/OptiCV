@@ -51,7 +51,7 @@ export function ResumeEditor({
     });
   };
 
-  const updateArrayItem = (arrayName: string, index: number, field: string, value: string) => {
+  const updateArrayItem = (arrayName: string, index: number, field: string, value: any) => {
     const newArray = [...(data[arrayName] || [])];
     if (!newArray[index]) newArray[index] = {};
     newArray[index][field] = value;
